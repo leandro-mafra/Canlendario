@@ -207,8 +207,8 @@ public class MainActivity extends AppCompatActivity {
 
         ConstroiCalendario(data);
 
-        Intent it = new Intent("ServiceCalendarioMafraSoft");
-        startService(it);
+        Intent it = new Intent(this, ServiceCalendario.class);
+        this.startService(it);
 
     }
 

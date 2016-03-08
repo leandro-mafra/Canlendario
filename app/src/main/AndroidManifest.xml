@@ -28,7 +28,6 @@
         </receiver>
         <service android:name=".ServiceCalendario" android:label="Calendario" android:exported="false">
             <intent-filter>
-                <action android:name="ServiceCalendarioMafraSoft"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>

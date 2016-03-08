@@ -16,8 +16,11 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.widget.RemoteViews;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -89,59 +92,34 @@ public class ServiceCalendario extends Service {
                         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icone_notificacao));
                         builder.setContentIntent(pi);
 
-                        GregorianCalendar dataEvePerd = new GregorianCalendar();
-                        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+                        Date dataEvePerd = new Date();
 
-                        dataEvePerd.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("data")));
-
-                        style.addLine("Data: " + dataEvePerd.get(Calendar.DAY_OF_MONTH) + "/" + dataEvePerd.get(Calendar.MONTH) + "/" + dataEvePerd.get(Calendar.YEAR));
-                        if(dataEvePerd.get(Calendar.MINUTE) < 10) {
-                            style.addLine("Hora: " + dataEvePerd.get(Calendar.HOUR_OF_DAY) + ":0" + dataEvePerd.get(Calendar.MINUTE));
-                        }else {
-                            style.addLine("Hora: " + dataEvePerd.get(Calendar.HOUR_OF_DAY) + ":" + dataEvePerd.get(Calendar.MINUTE));
-                        }
-                        style.addLine("Evento:");
-
-                        int finau = 0;
-                        String temp = "";
-                        String pala = "";
-                        for (int a = 0; a < testo.length(); a++) {
-                            String temp2 = "";
-                            temp2 = temp2 + testo.charAt(a);
-
-                            if(temp2.equals(" ")){
-                                if(temp.length() + 1 + pala.length() > 30/*** tamanho da linha ***/){
-                                    style.addLine(""+temp);
-                                    temp = "";
-                                    temp = pala;
-                                    pala = "";
-                                }else{
-                                    if(temp.length() == 0){
-                                        temp = temp + pala;
-                                        pala = "";
-                                    }else{
-                                        temp = temp + " "+ pala;
-                                        pala = "";
-                                    }
-                                }
-                            }else{
-                                pala = pala + testo.charAt(a);
-                            }
-
-                        }
-                        if(temp.length() + 1 + pala.length() > 30/*** tamanho da linha ***/){
-                            style.addLine(""+temp);
-                            style.addLine(""+pala);
-                        }else{
-                            style.addLine(""+temp+" "+ pala);
-                        }
-
-                        builder.setStyle(style);
+                        dataEvePerd.setTime(cursor.getLong(cursor.getColumnIndex("data")));
 
                         Notification n = builder.build();
+
+                        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        String texto = dt.format(dataEvePerd);
+
+                        /*************** notificação resumida **************/
+                        RemoteViews viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
+
+                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, "Data: " + texto);
+                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, "Novo Evento");
+
+                        n.contentView = viewremotacontra;
+                        /********** notificação expandida *************/
+                        RemoteViews viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
+
+                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, "Data: "+texto+"\n"+testo);
+                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, "Novo Evento");
+
+                        n.bigContentView = viewremotaexpand;
+
+
                         n.vibrate = new long[]{150, 300, 150, 300, 150, 300};
                         n.flags = Notification.FLAG_AUTO_CANCEL;
-                        nota.notify((int)(Math.random()*9999), n);
+                        nota.notify((int) (Math.random() * 9999), n);
 
                         try {
                             Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -180,59 +158,35 @@ public class ServiceCalendario extends Service {
                         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icone_notificacao));
                         builder.setContentIntent(pi);
 
-                        GregorianCalendar dataEvePerd = new GregorianCalendar();
-                        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+                        Date dataEvePerd = new Date();
 
-                        dataEvePerd.setTimeInMillis(cursor.getLong(cursor.getColumnIndex("data")));
-
-                        style.addLine("Data: " + dataEvePerd.get(Calendar.DAY_OF_MONTH) + "/" + dataEvePerd.get(Calendar.MONTH) + "/" + dataEvePerd.get(Calendar.YEAR));
-                        if(dataEvePerd.get(Calendar.MINUTE) < 10) {
-                            style.addLine("Hora: " + dataEvePerd.get(Calendar.HOUR_OF_DAY) + ":0" + dataEvePerd.get(Calendar.MINUTE));
-                        }else {
-                            style.addLine("Hora: " + dataEvePerd.get(Calendar.HOUR_OF_DAY) + ":" + dataEvePerd.get(Calendar.MINUTE));
-                        }
-                        style.addLine("Evento:");
-
-                        int finau = 0;
-                        String temp = "";
-                        String pala = "";
-                        for (int a = 0; a < testo.length(); a++) {
-                            String temp2 = "";
-                            temp2 = temp2 + testo.charAt(a);
-
-                            if(temp2.equals(" ")){
-                                if(temp.length() + 1 + pala.length() > 30/*** tamanho da linha ***/){
-                                    style.addLine(""+temp);
-                                    temp = "";
-                                    temp = pala;
-                                    pala = "";
-                                }else{
-                                    if(temp.length() == 0){
-                                        temp = temp + pala;
-                                        pala = "";
-                                    }else{
-                                        temp = temp + " "+ pala;
-                                        pala = "";
-                                    }
-                                }
-                            }else{
-                                pala = pala + testo.charAt(a);
-                            }
-
-                        }
-                        if(temp.length() + 1 + pala.length() > 30/*** tamanho da linha ***/){
-                            style.addLine(""+temp);
-                            style.addLine(""+pala);
-                        }else{
-                            style.addLine(""+temp+" "+ pala);
-                        }
-
-                        builder.setStyle(style);
+                        dataEvePerd.setTime(cursor.getLong(cursor.getColumnIndex("data")));
 
                         Notification n = builder.build();
+
+                        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        String texto = dt.format(dataEvePerd);
+
+                        /*************** notificação resumida **************/
+                        RemoteViews viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
+
+                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, "Data: "+texto);
+                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, "evento perdido");
+
+                        n.contentView = viewremotacontra;
+                        /********** notificação expandida *************/
+                        RemoteViews viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
+
+                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, "Data: "+texto+"\n"+testo);
+                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, "evento perdido");
+
+                        n.bigContentView = viewremotaexpand;
+
+
                         n.vibrate = new long[]{150, 300, 150, 300, 150, 300};
                         n.flags = Notification.FLAG_AUTO_CANCEL;
-                        nota.notify((int)(Math.random()*9999), n);
+                        nota.notify((int) (Math.random() * 9999), n);
+
 
                         try {
                             Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

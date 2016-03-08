@@ -10,7 +10,7 @@ import android.content.Intent;
 public class BroatCast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent it = new Intent("ServiceCalendarioMafraSoft");
+        Intent it = new Intent(context, ServiceCalendario.class);
         context.startService(it);
     }
 }
