@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Evento"></activity>
+        <activity android:name=".Evento"
+            android:windowSoftInputMode="adjustPan"></activity>
         <receiver android:name=".BroatCast"
                 android:label="BroatCastCalenMafraSoft"
                 android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
