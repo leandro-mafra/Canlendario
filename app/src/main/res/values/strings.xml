@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">Canlendario</string>
+    <string name="app_name">Calendar</string>
+    <string name="salva">Save</string>
+    <string name="novoevento">New Event</string>
+    <string name="eventcome">New Event Began</string>
+    <string name="eventperd">Missed Event</string>
+    <string name="jan">January</string>
+    <string name="fev">February</string>
+    <string name="mar">March</string>
+    <string name="abr">April</string>
+    <string name="mai">May</string>
+    <string name="jun">June</string>
+    <string name="jul">July</string>
+    <string name="ago">August</string>
+    <string name="set">September</string>
+    <string name="out">October</string>
+    <string name="nov">November</string>
+    <string name="dez">December</string>
+    <string name="deleteevent">Really want to delete this event?</string>
+    <string name="excluir">Delete</string>
+    <string name="no">No</string>
+    <string name="sim">Yes</string>
+    <string name="data">Date</string>
 </resources>

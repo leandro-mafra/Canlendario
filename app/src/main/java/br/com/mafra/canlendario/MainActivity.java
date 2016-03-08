@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout loader;
     private boolean up = false;
 
-    private List<String> meses = new ArrayList<String>();
+    private List<String> meses = new ArrayList<>();
     private List<String> anos = new ArrayList<String>();
     private String marcadia;
 
@@ -67,18 +67,18 @@ public class MainActivity extends AppCompatActivity {
         main = (RelativeLayout)findViewById(R.id.layoutmain);
         loader = (RelativeLayout)findViewById(R.id.layoutloadermain);
 
-        meses.add(0, "Janeiro");
-        meses.add(1, "Fevereiro");
-        meses.add(2, "Março");
-        meses.add(3, "Abril");
-        meses.add(4, "Maio");
-        meses.add(5, "Junho");
-        meses.add(6, "Julho");
-        meses.add(7, "Agosto");
-        meses.add(8, "Setembro");
-        meses.add(9, "Outubro");
-        meses.add(10, "Novembro");
-        meses.add(11, "Dezembro");
+        meses.add(0, getResources().getString(R.string.jan));
+        meses.add(1, getResources().getString(R.string.fev));
+        meses.add(2, getResources().getString(R.string.mar));
+        meses.add(3, getResources().getString(R.string.abr));
+        meses.add(4, getResources().getString(R.string.mai));
+        meses.add(5, getResources().getString(R.string.jun));
+        meses.add(6, getResources().getString(R.string.jul));
+        meses.add(7, getResources().getString(R.string.ago));
+        meses.add(8, getResources().getString(R.string.set));
+        meses.add(9, getResources().getString(R.string.out));
+        meses.add(10, getResources().getString(R.string.nov));
+        meses.add(11, getResources().getString(R.string.dez));
 
         for(int i = 2000 ; i<2200 ; i++){
             anos.add(""+i);
@@ -357,9 +357,9 @@ public class MainActivity extends AppCompatActivity {
 
             final long idd = id;
             AlertDialog.Builder alerta = new AlertDialog.Builder(contesto);
-            alerta.setTitle("Excluir");
-            alerta.setMessage("Realmente deseja excluir esse evento?");
-            alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            alerta.setTitle(R.string.excluir);
+            alerta.setMessage(R.string.deleteevent);
+            alerta.setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     main.setVisibility(View.INVISIBLE);
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-            alerta.setNegativeButton("não", null);
+            alerta.setNegativeButton(R.string.no, null);
             alerta.show();
 
             return false;

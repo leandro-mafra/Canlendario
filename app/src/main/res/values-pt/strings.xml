@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Calendário</string>
+    <string name="eventcome">Novo Evento Começou</string>
+    <string name="eventperd">Evento Perdido</string>
+    <string name="novoevento">Novo Evento</string>
+    <string name="salva">Salvar</string>
+    <string name="abr">Abril</string>
+    <string name="ago">Agosto</string>
+    <string name="deleteevent">Realmente deseja excluir este evento?</string>
+    <string name="dez">Dezembro</string>
+    <string name="excluir">Excluir</string>
+    <string name="fev">Fevereiro</string>
+    <string name="jan">Janeiro</string>
+    <string name="jul">Julho</string>
+    <string name="jun">Junho</string>
+    <string name="mar">Março</string>
+    <string name="mai">Maio</string>
+    <string name="no">Não</string>
+    <string name="nov">Novembro</string>
+    <string name="out">Outubro</string>
+    <string name="set">Setembro</string>
+    <string name="sim">Sim</string>
+    <string name="data">Data</string>
+</resources>

@@ -85,8 +85,8 @@ public class ServiceCalendario extends Service {
                         PendingIntent pi = PendingIntent.getActivity(contesto, 0, new Intent(contesto, MainActivity.class), 0);
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(contesto);
-                        builder.setTicker("Novo Evento Começou");
-                        builder.setContentTitle("Novo Evento Começou");
+                        builder.setTicker(getResources().getString(R.string.eventcome));
+                        builder.setContentTitle(getResources().getString(R.string.eventcome));
                         String testo = cursor.getString(cursor.getColumnIndex("conteudo"));
                         builder.setSmallIcon(R.drawable.icone_notificacao);
                         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icone_notificacao));
@@ -104,15 +104,15 @@ public class ServiceCalendario extends Service {
                         /*************** notificação resumida **************/
                         RemoteViews viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
 
-                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, "Data: " + texto);
-                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, "Novo Evento");
+                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": " + texto);
+                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.novoevento));
 
                         n.contentView = viewremotacontra;
                         /********** notificação expandida *************/
                         RemoteViews viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
 
-                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, "Data: "+texto+"\n"+testo);
-                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, "Novo Evento");
+                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
+                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.novoevento));
 
                         n.bigContentView = viewremotaexpand;
 
@@ -151,8 +151,8 @@ public class ServiceCalendario extends Service {
                         PendingIntent pi = PendingIntent.getActivity(contesto, 0, new Intent(contesto, MainActivity.class), 0);
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(contesto);
-                        builder.setTicker("Evento Perdido");
-                        builder.setContentTitle("Evento Perdido");
+                        builder.setTicker(getResources().getString(R.string.eventperd));
+                        builder.setContentTitle(getResources().getString(R.string.eventperd));
                         String testo = cursor.getString(cursor.getColumnIndex("conteudo"));
                         builder.setSmallIcon(R.drawable.icone_notificacao);
                         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.icone_notificacao));
@@ -170,15 +170,15 @@ public class ServiceCalendario extends Service {
                         /*************** notificação resumida **************/
                         RemoteViews viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
 
-                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, "Data: "+texto);
-                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, "Evento Perdido");
+                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": "+texto);
+                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.eventperd));
 
                         n.contentView = viewremotacontra;
                         /********** notificação expandida *************/
                         RemoteViews viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
 
-                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, "Data: "+texto+"\n"+testo);
-                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, "Evento perdido");
+                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
+                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.eventperd));
 
                         n.bigContentView = viewremotaexpand;
 
