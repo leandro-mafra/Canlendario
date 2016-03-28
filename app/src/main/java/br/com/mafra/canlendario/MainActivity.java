@@ -1,12 +1,17 @@
 package br.com.mafra.canlendario;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -207,8 +212,19 @@ public class MainActivity extends AppCompatActivity {
 
         ConstroiCalendario(data);
 
-        Intent it = new Intent(this, ServiceCalendario.class);
-        this.startService(it);
+        Boolean alar = PendingIntent.getService(this, 0, new Intent(this, ServiceCalendario.class), PendingIntent.FLAG_NO_CREATE) == null;
+
+        if(alar){
+
+            Calendar calen = Calendar.getInstance();
+            calen.setTimeInMillis(System.currentTimeMillis());
+
+            Intent it = new Intent(this, ServiceCalendario.class);
+            PendingIntent iit = PendingIntent.getService(this, 0, it, 0);
+
+            AlarmManager alarme = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarme.setRepeating(AlarmManager.RTC_WAKEUP, calen.getTimeInMillis(), 60000, iit);
+        }
 
     }
 

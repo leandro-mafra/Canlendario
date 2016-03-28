@@ -1,6 +1,8 @@
 package br.com.mafra.canlendario;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**

@@ -10,9 +10,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -27,8 +29,9 @@ import java.util.GregorianCalendar;
  * Created by Leandro on 19/02/2016.
  */
 public class ServiceCalendario extends Service {
-    private boolean thred = true;
     private Context contesto;
+    private ConecSql sql;
+    private SQLiteDatabase conn = null;
 
     @Nullable
     @Override
@@ -40,42 +43,39 @@ public class ServiceCalendario extends Service {
     public void onCreate (){
         super.onCreate();
         contesto = this;
+
+        try {
+            sql = new ConecSql(contesto);
+            conn = sql.getWritableDatabase();
+        }catch (SQLiteException e){
+
+        }
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, final int starid){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 TretaDoSQL();
             }
         }).start();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, final int starid){
-
         return(START_STICKY);
     }
 
 
     public void TretaDoSQL(){
-        ConecSql sql;
-        SQLiteDatabase conn = null;
-        try {
-            sql = new ConecSql(contesto);
-            conn = sql.getWritableDatabase();
-        }catch (SQLiteException e){
-            thred = false;
-        }
 
-        long loop = 0;
-        while (thred) {
-            Calendar tempo = Calendar.getInstance();
-            if(loop <= tempo.getTimeInMillis()) {
+            long tempo = System.currentTimeMillis();
+
                 Cursor cursor = null;
 
                 /********************** notificações futuras ********************/
                 try {
-                    cursor = conn.rawQuery("select _id, data, conteudo from CalendarioAgendMafraSoft where data >= " + tempo.getTimeInMillis() + " and data <= " + (tempo.getTimeInMillis() + 59999) + ";", null);
+                    cursor = conn.rawQuery("select _id, data, conteudo from CalendarioAgendMafraSoft where data >= " + tempo + " and data <= " + (tempo + 59999) + ";", null);
                 } catch (SQLiteException e) {
-                    thred = false;
+
                 }
 
                 if (cursor != null) {
@@ -106,6 +106,10 @@ public class ServiceCalendario extends Service {
 
                         viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": " + texto);
                         viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.novoevento));
+                        if(Build.VERSION.SDK_INT >= 21){
+                            viewremotacontra.setTextColor(R.id.textnotifcontraido, Color.rgb(0, 0, 0));
+                            viewremotacontra.setTextColor(R.id.textonotificatitulo, Color.rgb(0, 0, 0));
+                        }
 
                         n.contentView = viewremotacontra;
                         /********** notificação expandida *************/
@@ -113,6 +117,10 @@ public class ServiceCalendario extends Service {
 
                         viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
                         viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.novoevento));
+                        if(Build.VERSION.SDK_INT >= 21){
+                            viewremotaexpand.setTextColor(R.id.ntextnotifcontraido, Color.rgb(0, 0, 0));
+                            viewremotaexpand.setTextColor(R.id.ntextonotificatitulo, Color.rgb(0, 0, 0));
+                        }
 
                         n.bigContentView = viewremotaexpand;
 
@@ -139,9 +147,9 @@ public class ServiceCalendario extends Service {
                 /********************** notificações passadas ********************/
                 cursor = null;
                 try {
-                    cursor = conn.rawQuery("select _id, data, conteudo from CalendarioAgendMafraSoft where data < " + tempo.getTimeInMillis() + " order by data desc;", null);
+                    cursor = conn.rawQuery("select _id, data, conteudo from CalendarioAgendMafraSoft where data < " + tempo + " order by data desc;", null);
                 } catch (SQLiteException e) {
-                    thred = false;
+
                 }
 
                 if (cursor != null) {
@@ -172,6 +180,10 @@ public class ServiceCalendario extends Service {
 
                         viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": "+texto);
                         viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.eventperd));
+                        if(Build.VERSION.SDK_INT >= 21){
+                            viewremotacontra.setTextColor(R.id.textnotifcontraido, Color.rgb(0, 0, 0));
+                            viewremotacontra.setTextColor(R.id.textonotificatitulo, Color.rgb(0, 0, 0));
+                        }
 
                         n.contentView = viewremotacontra;
                         /********** notificação expandida *************/
@@ -179,6 +191,11 @@ public class ServiceCalendario extends Service {
 
                         viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
                         viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.eventperd));
+                        if(Build.VERSION.SDK_INT >= 21){
+                            viewremotaexpand.setTextColor(R.id.ntextnotifcontraido, Color.rgb(0, 0, 0));
+                            viewremotaexpand.setTextColor(R.id.ntextonotificatitulo, Color.rgb(0, 0, 0));
+                        }
+
 
                         n.bigContentView = viewremotaexpand;
 
@@ -203,18 +220,8 @@ public class ServiceCalendario extends Service {
                     }
 
                 }
-                tempo.add(Calendar.MINUTE, 1);
-                tempo.set(Calendar.SECOND, 0);
-                tempo.set(Calendar.MILLISECOND, 0);
-                loop = tempo.getTimeInMillis();
-            }
-        }
+
     }
 
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        thred = false;
-    }
 
 }
