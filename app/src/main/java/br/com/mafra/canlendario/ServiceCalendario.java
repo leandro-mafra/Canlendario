@@ -102,24 +102,34 @@ public class ServiceCalendario extends Service {
                         String texto = dt.format(dataEvePerd);
 
                         /*************** notificação resumida **************/
-                        RemoteViews viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
+                        RemoteViews viewremotacontra;
 
-                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": " + texto);
-                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.novoevento));
                         if(Build.VERSION.SDK_INT >= 21){
-                            viewremotacontra.setTextColor(R.id.textnotifcontraido, Color.rgb(0, 0, 0));
-                            viewremotacontra.setTextColor(R.id.textonotificatitulo, Color.rgb(0, 0, 0));
+                            viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida_api21);
+                            viewremotacontra.setTextViewText(R.id.textnotifcontraido21, getResources().getString(R.string.data)+": " + texto);
+                            viewremotacontra.setTextViewText(R.id.textonotificatitulo21, getResources().getString(R.string.novoevento));
+                            viewremotacontra.setTextColor(R.id.textnotifcontraido21, Color.rgb(0, 0, 0));
+                            viewremotacontra.setTextColor(R.id.textonotificatitulo21, Color.rgb(0, 0, 0));
+                        }else{
+                            viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
+                            viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": " + texto);
+                            viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.novoevento));
                         }
 
                         n.contentView = viewremotacontra;
                         /********** notificação expandida *************/
-                        RemoteViews viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
+                        RemoteViews viewremotaexpand;
 
-                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
-                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.novoevento));
                         if(Build.VERSION.SDK_INT >= 21){
-                            viewremotaexpand.setTextColor(R.id.ntextnotifcontraido, Color.rgb(0, 0, 0));
-                            viewremotaexpand.setTextColor(R.id.ntextonotificatitulo, Color.rgb(0, 0, 0));
+                            viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido_api21);
+                            viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido21, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
+                            viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo21, getResources().getString(R.string.novoevento));
+                            viewremotaexpand.setTextColor(R.id.ntextnotifcontraido21, Color.rgb(0, 0, 0));
+                            viewremotaexpand.setTextColor(R.id.ntextonotificatitulo21, Color.rgb(0, 0, 0));
+                        }else{
+                            viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
+                            viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
+                            viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.novoevento));
                         }
 
                         n.bigContentView = viewremotaexpand;
@@ -176,24 +186,34 @@ public class ServiceCalendario extends Service {
                         String texto = dt.format(dataEvePerd);
 
                         /*************** notificação resumida **************/
-                        RemoteViews viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
-
-                        viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": "+texto);
-                        viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.eventperd));
+                        RemoteViews viewremotacontra;
+                        
                         if(Build.VERSION.SDK_INT >= 21){
-                            viewremotacontra.setTextColor(R.id.textnotifcontraido, Color.rgb(0, 0, 0));
-                            viewremotacontra.setTextColor(R.id.textonotificatitulo, Color.rgb(0, 0, 0));
+                            viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida_api21);
+                            viewremotacontra.setTextViewText(R.id.textnotifcontraido21, getResources().getString(R.string.data)+": "+texto);
+                            viewremotacontra.setTextViewText(R.id.textonotificatitulo21, getResources().getString(R.string.eventperd));
+                            viewremotacontra.setTextColor(R.id.textnotifcontraido21, Color.rgb(0, 0, 0));
+                            viewremotacontra.setTextColor(R.id.textonotificatitulo21, Color.rgb(0, 0, 0));
+                        }else{
+                            viewremotacontra = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_contraida);
+                            viewremotacontra.setTextViewText(R.id.textnotifcontraido, getResources().getString(R.string.data)+": "+texto);
+                            viewremotacontra.setTextViewText(R.id.textonotificatitulo, getResources().getString(R.string.eventperd));
                         }
 
                         n.contentView = viewremotacontra;
                         /********** notificação expandida *************/
-                        RemoteViews viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
+                        RemoteViews viewremotaexpand;
 
-                        viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
-                        viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.eventperd));
                         if(Build.VERSION.SDK_INT >= 21){
-                            viewremotaexpand.setTextColor(R.id.ntextnotifcontraido, Color.rgb(0, 0, 0));
-                            viewremotaexpand.setTextColor(R.id.ntextonotificatitulo, Color.rgb(0, 0, 0));
+                            viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido_api21);
+                            viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido21, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
+                            viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo21, getResources().getString(R.string.eventperd));
+                            viewremotaexpand.setTextColor(R.id.ntextnotifcontraido21, Color.rgb(0, 0, 0));
+                            viewremotaexpand.setTextColor(R.id.ntextonotificatitulo21, Color.rgb(0, 0, 0));
+                        }else{
+                            viewremotaexpand = new RemoteViews(getPackageName(), R.layout.layout_da_notificacao_expandido);
+                            viewremotaexpand.setTextViewText(R.id.ntextnotifcontraido, getResources().getString(R.string.data)+": "+texto+"\n"+testo);
+                            viewremotaexpand.setTextViewText(R.id.ntextonotificatitulo, getResources().getString(R.string.eventperd));
                         }
 
 
